@@ -4,7 +4,7 @@ import { setAuthToken } from '../Services/api';
 
 export const AuthContext = createContext(null);
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://72.60.96.50:5000';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://72.60.96.50';
 
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
