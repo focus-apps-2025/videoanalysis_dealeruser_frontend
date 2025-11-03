@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import theme from './styles/theme.jsx'; 
 import AuthProvider from './contexts/AuthContext.jsx';
-import Layout from './components/layout/Layout.jsx';
+import Layout from './components/Layout/Layout.jsx';
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'; 
 import LoginPage from './pages/Loginpage.jsx';
 import NewAnalysis from './pages/NewAnalysis.jsx';
