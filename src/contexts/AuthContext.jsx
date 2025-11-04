@@ -57,6 +57,33 @@ export default function AuthProvider({ children }) {
     setAuthToken(null);
   }, []);
 
+  // ADD UPDATE PROFILE FUNCTION FOR DEALER USERS
+  const updateProfile = useCallback(async (profileData) => {
+  setLoading(true);
+  try {
+    const response = await axios.put(`${API_BASE}/users/me`, profileData, {
+      headers: { 
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    });
+
+    setUser(prevUser => ({
+      ...prevUser,
+      ...response.data
+    }));
+
+    return response.data;
+  } catch (error) {
+    const errorMessage = error.response?.data?.detail || 
+                        error.response?.data?.message || 
+                        'Failed to update profile';
+    throw new Error(errorMessage);
+  } finally {
+    setLoading(false);
+  }
+}, [token]);
+
   useEffect(() => {
     // Reset auth header when token changes
     setAuthToken(token);
@@ -71,9 +98,10 @@ export default function AuthProvider({ children }) {
       loading,
       login,
       logout,
+      updateProfile, 
       API_BASE,
     }),
-    [token, user, role, isAuthenticated, loading, login, logout]
+    [token, user, role, isAuthenticated, loading, login, logout, updateProfile]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
