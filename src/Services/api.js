@@ -1,7 +1,7 @@
 // dealer-portal/src/services/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'https://72.60.96.50';
+const API_BASE_URL = 'https://videoapi.focusengineeringapp.com';
 
 // Create axios instance
 const api = axios.create({
