@@ -24,7 +24,8 @@ import {
   Alert,
   CircularProgress,
   Paper,
-  Fade
+  Fade,
+  InputAdornment
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -36,7 +37,9 @@ import {
   Edit,
   Save,
   Cancel,
-  Close
+  Close,
+  Visibility,
+  VisibilityOff
 } from '@mui/icons-material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
@@ -63,6 +66,8 @@ export default function Navbar() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
   const theme = useTheme(); 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -71,6 +76,9 @@ export default function Navbar() {
   const toggleDrawer = () => setDrawerOpen(!drawerOpen);
   const openUserMenu = (e) => setUserAnchor(e.currentTarget);
   const closeUserMenu = () => setUserAnchor(null);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
   const handleEditClick = () => {
     setEditForm({
@@ -384,27 +392,55 @@ export default function Navbar() {
                 disabled={loading}
               />
               
-              {/* New Password */}
+              {/* New Password with Eye Icon */}
               <TextField
                 label="New Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={editForm.newPassword}
                 onChange={handleEditChange('newPassword')}
                 fullWidth
                 size="small"
                 disabled={loading}
                 placeholder="Leave empty to keep current password"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                        size="small"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
               
-              {/* Confirm Password */}
+              {/* Confirm Password with Eye Icon */}
               <TextField
                 label="Confirm New Password"
-                type="password"
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={editForm.confirmPassword}
                 onChange={handleEditChange('confirmPassword')}
                 fullWidth
                 size="small"
                 disabled={loading}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle confirm password visibility"
+                        onClick={handleClickShowConfirmPassword}
+                        edge="end"
+                        size="small"
+                      >
+                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Box>
             
