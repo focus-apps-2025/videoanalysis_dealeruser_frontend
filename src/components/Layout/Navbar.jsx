@@ -184,64 +184,84 @@ export default function Navbar() {
     setSuccess('');
   };
 
-  const drawer = (
-    <Box sx={{ width: 280, height: '100%', background: theme.custom.surface }}>
-      <Box sx={{ p: 3, background: theme.custom.gradientPrimary, color: '#fff' }}>
-        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>CITNOW Analytics</Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}>
-            {(user?.username || 'U').charAt(0).toUpperCase()}
-          </Avatar>
-          <Box>
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>{user?.username || 'User'}</Typography>
-            <Chip label="Dealer User" size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff' }}/>
-          </Box>
+const drawer = (
+  <Box sx={{ width: 280, height: '100%', background: theme.custom.surface }}>
+    <Box sx={{ p: 3, background: theme.custom.gradientPrimary, color: '#fff' }}>
+      <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+        {/* ✅ Show dealership name in mobile drawer */}
+        {user?.showroom_name || 'CITNOW Analytics'}
+      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)' }}>
+          {(user?.username || 'U').charAt(0).toUpperCase()}
+        </Avatar>
+        <Box>
+          <Typography variant="body2" sx={{ fontWeight: 500 }}>{user?.username || 'User'}</Typography>
+          <Chip label="Dealer User" size="small" sx={{ bgcolor: 'rgba(255,255,255,0.2)', color: '#fff' }}/>
         </Box>
       </Box>
-      
-      <List sx={{ p: 2 }}>
-        {MENU_ITEMS.map(({ text, path, icon: Icon }) => (
-          <ListItemButton 
-            key={path} 
-            component={RouterLink} 
-            to={path} 
-            selected={isActive(path)} 
-            onClick={toggleDrawer} 
-            sx={{ 
-              mb: 1, 
-              borderRadius: 2, 
-              '&.Mui-selected': { 
-                background: theme.custom.gradientPrimary, 
-                color: '#fff', 
-                '& .MuiListItemIcon-root': { color: '#fff' } 
-              } 
-            }}
-          >
-            <ListItemIcon sx={{ color: isActive(path) ? '#fff' : theme.custom.textSecondary }}>
-              <Icon />
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItemButton>
-        ))}
-      </List>
     </Box>
-  );
+    
+    <List sx={{ p: 2 }}>
+      {MENU_ITEMS.map(({ text, path, icon: Icon }) => (
+        <ListItemButton 
+          key={path} 
+          component={RouterLink} 
+          to={path} 
+          selected={isActive(path)} 
+          onClick={toggleDrawer} 
+          sx={{ 
+            mb: 1, 
+            borderRadius: 2, 
+            '&.Mui-selected': { 
+              background: theme.custom.gradientPrimary, 
+              color: '#fff', 
+              '& .MuiListItemIcon-root': { color: '#fff' } 
+            } 
+          }}
+        >
+          <ListItemIcon sx={{ color: isActive(path) ? '#fff' : theme.custom.textSecondary }}>
+            <Icon />
+          </ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItemButton>
+      ))}
+    </List>
+  </Box>
+);
 
   return (
     <>
       <AppBar position="fixed" elevation={0} sx={{ background: theme.custom.background, borderBottom: `1px solid ${theme.custom.border}`, zIndex: theme.zIndex.drawer + 1 }}>
         <Toolbar sx={{ justifyContent: 'space-between', minHeight: '70px !important' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {isMobile && <IconButton onClick={toggleDrawer} sx={{ color: theme.custom.textPrimary }}><MenuIcon /></IconButton>}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <Box sx={{ width: 32, height: 32, borderRadius: 2, background: theme.custom.gradientPrimary, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Business sx={{ fontSize: 18, color: '#fff' }} />
-              </Box>
-              <Typography variant="h5" sx={{ fontWeight: 700, background: theme.custom.gradientPrimary, backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>
-                CITNOW
-              </Typography>
-            </Box>
-          </Box>
+  {isMobile && <IconButton onClick={toggleDrawer} sx={{ color: theme.custom.textPrimary }}><MenuIcon /></IconButton>}
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+    <Box sx={{ width: 32, height: 32, borderRadius: 2, background: theme.custom.gradientPrimary, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Business sx={{ fontSize: 18, color: '#fff' }} />
+    </Box>
+    <Box>
+      <Typography variant="h5" sx={{ 
+        fontWeight: 700, 
+        background: theme.custom.gradientPrimary, 
+        backgroundClip: 'text', 
+        WebkitBackgroundClip: 'text', 
+        color: 'transparent',
+        lineHeight: 1.2
+      }}>
+        {/* ✅ Show dealership showroom name */}
+        {user?.showroom_name || 'Dealer Portal'}
+      </Typography>
+      <Typography variant="caption" sx={{ 
+        color: theme.custom.textSecondary,
+        fontWeight: 500,
+        display: { xs: 'none', sm: 'block' }
+      }}>
+        Powered by FOCUS
+      </Typography>
+    </Box>
+  </Box>
+</Box>
 
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 0.5, background: theme.custom.surface, borderRadius: 3, p: 0.5, border: `1px solid ${theme.custom.border}` }}>
