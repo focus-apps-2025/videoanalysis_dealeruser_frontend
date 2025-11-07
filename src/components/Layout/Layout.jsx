@@ -1,6 +1,6 @@
 // src/components/layout/Layout.jsx
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -17,33 +17,25 @@ export default function Layout({ children }) {
     >
       <Navbar />
 
+      {/* Main content area */}
       <Box
         component="main"
         sx={{
           flex: 1,
-          display: 'flex',
-          justifyContent: 'center', // center horizontally
-          alignItems: 'center', // center vertically
-          py: 4,
-          px: 2,
+          py: 6,
         }}
       >
-        <Box
+        <Container
+          maxWidth="xl"
           sx={{
-            width: '100%',
-            maxWidth: '900px', // 🔧 
-            backgroundColor: 'white',
-            borderRadius: 3,
-            boxShadow: 2,
-            p: 4,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center', // centers content inside
-            justifyContent: 'center',
+            alignItems: 'stretch',
+            justifyContent: 'flex-start',
           }}
         >
           {children}
-        </Box>
+        </Container>
       </Box>
 
       <Footer />
